@@ -1,3 +1,5 @@
 #!/bin/bash
 
-/usr/bin/rpmbuild "$@"
+pushd /docker/rpmbuild > /dev/null
+  /usr/bin/rpmbuild "$@" --define="_topdir /docker/rpmbuild"
+popd > /dev/null

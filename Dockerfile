@@ -2,11 +2,14 @@ FROM centos:latest
 MAINTAINER pgmillon
 
 RUN yum groupinstall -y "Development Tools"
-RUN yum install -y rpmdevtools yum-utils
+RUN yum install -y rpmdevtools yum-utils sudo glibc
 
-ADD docker-entrypoint.sh /opt/docker-entrypoint.sh
-RUN chmod +x /opt/docker-entrypoint.sh
+ADD sudoers /etc/sudoers.d/docker
 
-RUN adduser -g 100 -u 1000 docker
+RUN adduser -g 100 -u 1000 -d /docker docker
 
-ENTRYPOINT ["/opt/docker-entrypoint.sh"]
+USER docker
+
+WORKDIR /docker
+
+CMD ["bash"]

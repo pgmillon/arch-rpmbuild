@@ -1,5 +1,7 @@
 #!/bin/bash
 
-pushd /docker/rpmbuild > /dev/null
-  /usr/bin/rpmbuild "$@" --define="_topdir /docker/rpmbuild"
-popd > /dev/null
+if [ -e "$1" ]; then
+  exec "$@"
+else
+  exec /bin/bash
+fi
